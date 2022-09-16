@@ -15,6 +15,7 @@ function MoreInfo() {
     }, [])
 
 
+
     console.log(game)
     return (
         <MoreInfoDiv>
@@ -22,11 +23,12 @@ function MoreInfo() {
                 <p>{game.title}</p>
                 <img src={game.image_url} alt={game.title} />
                 <p>{game.game_genre}</p>
-                <AddReview />
+                <AddReview id={id} />
                 {
                     game.reviews.map(item =>
                         <Review
-                            key={game.id}
+                            key={item.id}
+                            id={item.id}
                             comment={item.review}
                             rating={item.rating}
                             user={item.user_id} />
