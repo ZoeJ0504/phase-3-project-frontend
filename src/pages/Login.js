@@ -1,65 +1,69 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 function Login() {
-    // const [errorMessages, setErrorMessages] = useState({});
-    // const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errorMessages, setErrorMessages] = useState({});
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [database, setDatabase] = useState([])
+    useEffect(() => {
+        fetch("http://localhost:9292/users")
+            .then(res => res.json())
+            .then(data => setDatabase(data))
+    }, [])
+    const errors = {
+        uname: "invalid username",
+        pass: "invalid password"
+    };
 
-    // const errors = {
-    //     uname: "invalid username",
-    //     pass: "invalid password"
-    // };
+    const handleSubmit = (event) => {
 
-    // const handleSubmit = (event) => {
+        event.preventDefault();
 
-    //     event.preventDefault();
-
-    //     let { uname, pass } = document.forms[0];
+        let { uname, pass } = document.forms[0];
 
 
-    // const userData = database.find((user) => user.username === uname.value);
+        const userData = database.find((user) => user.username === uname.value);
 
-    //     if (userData) {
-    //         if (userData.password !== pass.value) {
-    //             setErrorMessages({ name: "pass", message: errors.pass });
-    //         } else {
-    //             setIsSubmitted(true);
-    //         }
-    //     } else {
-    //         setErrorMessages({ name: "uname", message: errors.uname });
-    //     }
-    // };
+        if (userData) {
+            if (userData.password !== pass.value) {
+                setErrorMessages({ name: "pass", message: errors.pass });
+            } else {
+                setIsSubmitted(true);
+            }
+        } else {
+            setErrorMessages({ name: "uname", message: errors.uname });
+        }
+    };
 
-    // const renderErrorMessage = (name) =>
-    //     name === errorMessages.name && (
-    //         <div className="error">{errorMessages.message}</div>
-    //     );
+    const renderErrorMessage = (name) =>
+        name === errorMessages.name && (
+            <div className="error">{errorMessages.message}</div>
+        );
 
-    // const renderForm = (
-    //     <div className="form">
-    //         <form onSubmit={handleSubmit}>
-    //             <div className="input-container">
-    //                 <label>Username </label>
-    //                 <input type="text" name="uname" required />
-    //                 {renderErrorMessage("uname")}
-    //             </div>
-    //             <div className="input-container">
-    //                 <label>Password </label>
-    //                 <input type="password" name="pass" required />
-    //                 {renderErrorMessage("pass")}
-    //             </div>
-    //             <div className="button-container">
-    //                 <input type="submit" />
-    //             </div>
-    //         </form>
-    //     </div>
-    // );
+    const renderForm = (
+        <div className="form">
+            <form onSubmit={handleSubmit}>
+                <div className="input-container">
+                    <label>Username </label>
+                    <input type="text" name="uname" required />
+                    {renderErrorMessage("uname")}
+                </div>
+                <div className="input-container">
+                    <label>Password </label>
+                    <input type="password" name="pass" required />
+                    {renderErrorMessage("pass")}
+                </div>
+                <div className="button-container">
+                    <input type="submit" />
+                </div>
+            </form>
+        </div>
+    );
     return (
         <div className="Login">
-            {/* <div className="login-form">
-                    <div className="title">Sign In</div>
-                    {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
-                </div> */}
-            I'm the Login Page
+            <div className="login-form">
+                <div className="title">Sign In</div>
+                {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+            </div>
         </div>
     )
 }

@@ -13,9 +13,9 @@ function AddNewGame() {
         const value = event.target.value
         setNewGame({ ...newGame, [name]: value })
     }
-
+    console.log(newGame)
     function handleSubmit(event) {
-        event.preventdefault()
+        event.preventDefault()
         fetch('http://localhost:9292/games', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -46,16 +46,16 @@ export default AddNewGame
 const NewGameForm = styled.form`
 color: white;
 `
-const FormTitleP = styled.p`
+const FormTitleP = styled.label`
 font-size: 40px;
 `
-const TitleP = styled.p`
+const TitleP = styled.label`
 font-size: 30px;
 `
-const ImageP = styled.p`
+const ImageP = styled.label`
 font-size: 40px;
 `
-const NewGameDiv = styled.p`
+const NewGameDiv = styled.div`
 background-color: #474747;
 width: 600px; 
 height: 700px;

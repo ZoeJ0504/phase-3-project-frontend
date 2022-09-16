@@ -7,11 +7,13 @@ function Game() {
     const [games, setGames] = useState([])
     const navigate = useNavigate()
 
+
     useEffect(() => {
         fetch("http://localhost:9292/games")
             .then(res => res.json())
             .then(data => setGames(data))
     }, [])
+
     console.log(games)
     const navigateNewPage = () => {
         navigate('/add_new_game')
@@ -29,6 +31,7 @@ function Game() {
                             title={game.title}
                             image={game.image_url}
                             genre={game.game_genre}
+                            id={game.id}
                         />
                     )
                 })}

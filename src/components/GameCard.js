@@ -1,13 +1,20 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
-function GameCard({ title, image, genre }) {
+function GameCard({ title, image, genre, id }) {
+    const navigate = useNavigate()
+
+    const handleClick = () => {
+        navigate(`/more_info/${id}`)
+    }
+
     return (
         <GameCardDiv>
             <TitleP>{title}</TitleP>
             <GamePic src={image} alt={title} />
             <GenreP>{genre}</GenreP>
-            <MoreInfoButton>More Info</MoreInfoButton>
+            <MoreInfoButton onClick={handleClick}>More Info</MoreInfoButton>
         </GameCardDiv>
     )
 }
